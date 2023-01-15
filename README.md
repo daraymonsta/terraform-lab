@@ -121,7 +121,7 @@ It is because we need to login to Azure cloud using the login `az login`.  Let's
 
 7. Login to Azure cloud using the command `az login`.  You will need to login as a user with at least the User Access Administrator role (so that later the user can create a Service Principal with Contributor permissions).
 
-If you need to add the role to a user, go to Step 5.  Otherwise, skip Step 5.
+If you need to add the role to a user, go to Step 5.  Otherwise, if you are logged in with a user account with enough permissions (e.g. Owner), then skip Step 5.
 
 ### Step 5: Adding 'User Access Administrator' role to a user
 
