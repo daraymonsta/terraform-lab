@@ -273,7 +273,7 @@ If you don't, the resource group will stay there in the cloud.  This is not a pr
 You should see the following:
 
 ```
-azurerm_resource_group.rg: Refreshing state... [id=/subscriptions/ad76532f-949a-44f6-af8e-61ac4fe2e53d/resourceGroups/test-rg]
+azurerm_resource_group.rg: Refreshing state... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/test-rg]
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   - destroy
@@ -282,7 +282,7 @@ Terraform will perform the following actions:
 
   \# azurerm_resource_group.rg will be destroyed
   \- resource "azurerm_resource_group" "rg" {
-      \- id       = "/subscriptions/ad76532f-949a-44f6-af8e-61ac4fe2e53d/resourceGroups/test-rg" -> null
+      \- id       = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/test-rg" -> null
       \- location = "uksouth" -> null
       \- name     = "test-rg" -> null
       \- tags     = {} -> null
@@ -302,8 +302,8 @@ Do you really want to destroy all resources?
 You should see this:
 
 ```
-azurerm_resource_group.rg: Destroying... [id=/subscriptions/ad76532f-949a-44f6-af8e-61ac4fe2e53d/resourceGroups/test-rg]
-azurerm_resource_group.rg: Still destroying... [id=/subscriptions/ad76532f-949a-44f6-af8e-61ac4fe2e53d/resourceGroups/test-rg, 10s elapsed]
+azurerm_resource_group.rg: Destroying... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/test-rg]
+azurerm_resource_group.rg: Still destroying... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/test-rg, 10s elapsed]
 azurerm_resource_group.rg: Destruction complete after 15s
 ```
 
