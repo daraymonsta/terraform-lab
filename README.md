@@ -216,11 +216,11 @@ If you are on the right track, you should see this on your screen:
 
 Terraform will perform the following actions:
 
-  # azurerm_resource_group.rg will be created
-  + resource "azurerm_resource_group" "rg" {
-      + id       = (known after apply)
-      + location = "uksouth"
-      + name     = "test-rg"
+  \# azurerm_resource_group.rg will be created
+  \+ resource "azurerm_resource_group" "rg" {
+      \+ id       = (known after apply)
+      \+ location = "uksouth"
+      \+ name     = "test-rg"
     }
 
 Plan: 1 to add, 0 to change, 0 to destroy.
@@ -269,12 +269,12 @@ Terraform used the selected providers to generate the following execution plan. 
 
 Terraform will perform the following actions:
 
-  # azurerm_resource_group.rg will be destroyed
-  - resource "azurerm_resource_group" "rg" {
-      - id       = "/subscriptions/ad76532f-949a-44f6-af8e-61ac4fe2e53d/resourceGroups/test-rg" -> null
-      - location = "uksouth" -> null
-      - name     = "test-rg" -> null
-      - tags     = {} -> null
+  \# azurerm_resource_group.rg will be destroyed
+  \- resource "azurerm_resource_group" "rg" {
+      \- id       = "/subscriptions/ad76532f-949a-44f6-af8e-61ac4fe2e53d/resourceGroups/test-rg" -> null
+      \- location = "uksouth" -> null
+      \- name     = "test-rg" -> null
+      \- tags     = {} -> null
     }
 
 Plan: 0 to add, 0 to change, 1 to destroy.
