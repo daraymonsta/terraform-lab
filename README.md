@@ -149,18 +149,22 @@ A Service Principal is like a user account used by applications - when an applic
 
 1. Run this command to create a Service Principal with *Contributor* permissions.  Update the `<SUBSCRIPTION_ID>` with your own subscription ID.  You can also change the name if you prefer.
 
-`az ad sp create-for-rbac --name="terraform-service-principal" \
+```
+az ad sp create-for-rbac --name="terraform-service-principal" \
                           --role="Contributor" \
-                          --scopes="/subscriptions/<SUBSCRIPTION_ID>"`
+                          --scopes="/subscriptions/<SUBSCRIPTION_ID>"
+```
 
 If it is successful, you will see some credentials for this user account on the screen similar to this:
 
+```
 {
   "appId": "xxxxxx-xxx-xxxx-xxxx-xxxxxxxxxx",
   "displayName": "terraform-service-principal",
   "password": "xxxxxx~xxxxxx~xxxxx",
   "tenant": "xxxxx-xxxx-xxxxx-xxxx-xxxxx"
 }
+```
 
 Save this information in a safe place such as a key or password vault.  You will need it later.
 
@@ -174,10 +178,12 @@ Terraform needs to be able to perform actions on your behalf to create resources
 
 Note: The ARM_CLIENT_ID is the *AppId*, the M_CLIENT_SECRET is the *password*, the ARM_TENANT_ID is the *tenant*.
 
-`export ARM_CLIENT_ID="<APPID_VALUE>"
+```
+export ARM_CLIENT_ID="<APPID_VALUE>"
 export ARM_CLIENT_SECRET="<PASSWORD_VALUE>"
 export ARM_SUBSCRIPTION_ID="<SUBSCRIPTION_ID>"
-export ARM_TENANT_ID="<TENANT_VALUE>"`
+export ARM_TENANT_ID="<TENANT_VALUE>"
+```
 
 Recommended: Save these commands (with the values ready to go) in a key/password vault so they can be run as soon as you have started up your VM.
 
@@ -211,7 +217,8 @@ If you are not in the folder we initialised in Step 4.2, you will get this error
 
 If you are on the right track, you should see this on your screen:
 
-`erraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+```
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   + create
 
 Terraform will perform the following actions:
@@ -229,16 +236,19 @@ Do you want to perform these actions?
   Terraform will perform the actions described above.
   Only 'yes' will be accepted to approve.
 
-  Enter a value: `
+  Enter a value: 
+```
 
 3. Enter *yes* and push Enter.
 
 If your deployment was successful, you should see something like this:
 
-`azurerm_resource_group.rg: Creating...
+```
+azurerm_resource_group.rg: Creating...
 azurerm_resource_group.rg: Creation complete after 1s [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/test-rg]
 
-Apply complete! Resources: 1 added, 0 changed, 0 destroyed.`
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+```
 
 4. If you like, check it was created by going to the Azure portal.  It may take a few seconds to show up.
 
@@ -262,7 +272,8 @@ If you don't, the resource group will stay there in the cloud.  This is not a pr
 
 You should see the following:
 
-`azurerm_resource_group.rg: Refreshing state... [id=/subscriptions/ad76532f-949a-44f6-af8e-61ac4fe2e53d/resourceGroups/test-rg]
+```
+azurerm_resource_group.rg: Refreshing state... [id=/subscriptions/ad76532f-949a-44f6-af8e-61ac4fe2e53d/resourceGroups/test-rg]
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   - destroy
@@ -283,14 +294,17 @@ Do you really want to destroy all resources?
   Terraform will destroy all your managed infrastructure, as shown above.
   There is no undo. Only 'yes' will be accepted to confirm.
 
-  Enter a value:`
+  Enter a value:
+```
 
 2. Type 'yes' and push Enter.
 
 You should see this:
 
-`azurerm_resource_group.rg: Destroying... [id=/subscriptions/ad76532f-949a-44f6-af8e-61ac4fe2e53d/resourceGroups/test-rg]
+```
+azurerm_resource_group.rg: Destroying... [id=/subscriptions/ad76532f-949a-44f6-af8e-61ac4fe2e53d/resourceGroups/test-rg]
 azurerm_resource_group.rg: Still destroying... [id=/subscriptions/ad76532f-949a-44f6-af8e-61ac4fe2e53d/resourceGroups/test-rg, 10s elapsed]
-azurerm_resource_group.rg: Destruction complete after 15s`
+azurerm_resource_group.rg: Destruction complete after 15s
+```
 
 You have now removed your first Azure resource group using Terraform!  Well done!
