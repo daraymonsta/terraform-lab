@@ -7,10 +7,10 @@ To learn how to deploy infrastructure as code in Azure through Terraform
 ### Step 1: Run a Ubuntu virtual machine using VirtualBox 7
 
 #### Why
-You need Virtualbox to run Ubuntu as a virtual machine on your local computer.
+You need Virtualbox to run Ubuntu as a virtual machine on your local computer.  You will need to install VirtualBox 7, download an Ubuntu image (.iso), and learn how to create a Linux virtual machine using VirtualBox (and use the Ubuntu image to install Linux).
 
 #### How
-Follow the instructions on the <a href="https://ubuntu.com/tutorials/how-to-run-ubuntu-desktop-on-a-virtual-machine-using-virtualbox#1-overview">Ubuntu tutorial</a> page
+Follow the instructions on the <a href="https://ubuntu.com/tutorials/how-to-run-ubuntu-desktop-on-a-virtual-machine-using-virtualbox#1-overview">Ubuntu tutorial</a> page.
 
 ### Step 2: Clone this repo
 
@@ -34,7 +34,7 @@ This will give you the basic Terraform code to get you started, plus a few other
 
    `git clone https://github.com/daraymonsta/terraform-lab`
 
-You will see that the 'terraform-lab' folder with this repo's files is created for you.  
+   You will see that the 'terraform-lab' folder with this repo's files is created for you.  
 
 6. Check that you can see the 'terraform-lab' folder listed. Use this command:
 
@@ -65,7 +65,7 @@ Run the script file to do the Terraform install for you instead - script files r
 
    `. ./install-tf.sh`
 
-You should get a *Permission denied* error.  This is because this file does not yet have executable permissions.
+   You should get a *Permission denied* error.  This is because this file does not yet have executable permissions.
 
 4. Add executable permissions to the 'install-tf.sh' by using this command:
 
@@ -91,13 +91,13 @@ We want to automate the create of a resource group in Azure cloud.
 
 3. Next, use this command to plan the terraform deployment: `terraform plan`
 
-You will notice that you get this error:
+   You will notice that you get this error:
 
-*Error: building AzureRM Client: please ensure you have installed Azure CLI version 2.0.79 or newer. Error parsing json result from the Azure CLI: launching Azure CLI: exec: "az": executable file not found in $PATH.*
+   *Error: building AzureRM Client: please ensure you have installed Azure CLI version 2.0.79 or newer. Error parsing json result from the Azure CLI: launching Azure CLI: exec: "az": executable file not found in $PATH.*
 
-Can you work out why?  Hint: It says *"az": executable file not found in $PATH.*
+   Can you work out why?  Hint: It says *"az": executable file not found in $PATH.*
 
-It is because Azure CLI has not been installed.  Azure CLI commands usually start with `az`.
+   It is because Azure CLI has not been installed.  Azure CLI commands usually start with `az`.
 
 4. Install Azure CLI.
 
@@ -111,17 +111,21 @@ Run this command: `curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash`
 
 6. Repeat 3.
 
-You will notice you get a new error:
+   You will notice you get a new error:
 
-*Error: building AzureRM Client: obtain subscription() from Azure CLI: parsing json result from the Azure CLI: waiting for the Azure CLI: exit status 1: ERROR: Please run 'az login' to setup account.*
+   *Error: building AzureRM Client: obtain subscription() from Azure CLI: parsing json result from the Azure CLI: waiting for the Azure CLI: exit status 1: ERROR: Please run 'az login' to setup account.*
 
-Once again, can you work out why?  Hint: *ERROR: Please run 'az login' to setup account.*
+   Once again, can you work out why?  Hint: *ERROR: Please run 'az login' to setup account.*
 
-It is because we need to login to Azure cloud using the login `az login`.  Let's do that next...
+   It is because we need to login to Azure cloud using the login `az login`.  Let's do that next...
 
 7. Login to Azure cloud using the command `az login`.  You will need to login as a user with at least the User Access Administrator role (so that later the user can create a Service Principal with Contributor permissions).
 
-If you need to add the role to a user, go to Step 5.  Otherwise, if you are logged in with a user account with enough permissions (e.g. Owner), then skip Step 5.
+   If you need to add the role to a user, go to Step 5.  Otherwise, if you are logged in with a user account with enough permissions (e.g. Owner), then skip Step 5.
+
+   Important: If you are multiple subscriptions under your one Azure account, you should also choose a default subscription you would like Terraform to use.  For this, run this command (update the `<SUBSCRIPTION_ID>` with your own subscription ID).
+
+   `az account set -s <SUBSCRIPTION_ID>`
 
 ### Step 5: Adding 'User Access Administrator' role to a user
 
@@ -145,28 +149,28 @@ If you need to add the role to a user, go to Step 5.  Otherwise, if you are logg
 
 #### Why are we doing this?
 
-A Service Principal is like a user account used by applications - when an application needs permission to do something it can use this instead of real person's user account.
+A Service Principal is like a user account used by applications - when an application needs permission to do something it can use this instead of real person's user account.  It is also called an App Registration account.
 
 1. Run this command to create a Service Principal with *Contributor* permissions.  Update the `<SUBSCRIPTION_ID>` with your own subscription ID.  You can also change the name if you prefer.
 
-```
-az ad sp create-for-rbac --name="terraform-service-principal" \
-                          --role="Contributor" \
-                          --scopes="/subscriptions/<SUBSCRIPTION_ID>"
-```
+   ```
+   az ad sp create-for-rbac --name="terraform-service-principal" \
+                           --role="Contributor" \
+                           --scopes="/subscriptions/<SUBSCRIPTION_ID>"
+   ```
 
-If it is successful, you will see some credentials for this user account on the screen similar to this:
+   If it is successful, you will see some credentials for this user account on the screen similar to this:
 
-```
-{
-  "appId": "xxxxxx-xxx-xxxx-xxxx-xxxxxxxxxx",
-  "displayName": "terraform-service-principal",
-  "password": "xxxxxx~xxxxxx~xxxxx",
-  "tenant": "xxxxx-xxxx-xxxxx-xxxx-xxxxx"
-}
-```
+   ```
+   {
+   "appId": "xxxxxx-xxx-xxxx-xxxx-xxxxxxxxxx",
+   "displayName": "terraform-service-principal",
+   "password": "xxxxxx~xxxxxx~xxxxx",
+   "tenant": "xxxxx-xxxx-xxxxx-xxxx-xxxxx"
+   }
+   ```
 
-Save this information in a safe place such as a key or password vault.  You will need it later.
+   Save this information in a safe place such as a key or password vault.  You will need it later.
 
 ### Step 7: Set your environment variables
 
@@ -176,22 +180,22 @@ Terraform needs to be able to perform actions on your behalf to create resources
 
 1. Run these commands using the values for the Service Principal's credentials you saved in Step 6.  Replace the variable values with the values returned by the command in Step 6 (plus the subscription ID you also used in Step 6).
 
-Note: The ARM_CLIENT_ID is the *AppId*, the M_CLIENT_SECRET is the *password*, the ARM_TENANT_ID is the *tenant*.
+   Note: The ARM_CLIENT_ID is the *AppId*, the M_CLIENT_SECRET is the *password*, the ARM_TENANT_ID is the *tenant*.
 
-```
-export ARM_CLIENT_ID="<APPID_VALUE>"
-export ARM_CLIENT_SECRET="<PASSWORD_VALUE>"
-export ARM_SUBSCRIPTION_ID="<SUBSCRIPTION_ID>"
-export ARM_TENANT_ID="<TENANT_VALUE>"
-```
+   ```
+   export ARM_CLIENT_ID="<APPID_VALUE>"
+   export ARM_CLIENT_SECRET="<PASSWORD_VALUE>"
+   export ARM_SUBSCRIPTION_ID="<SUBSCRIPTION_ID>"
+   export ARM_TENANT_ID="<TENANT_VALUE>"
+   ```
 
-Recommended: Save these commands (with the values ready to go) in a key/password vault so they can be run as soon as you have started up your VM.
+   Recommended: Save these commands (with the values ready to go) in a key/password vault so they can be run as soon as you have started up your VM.
 
-Other options: You could also save the commands in a script file (you will remember they have the extension .sh).  But you will need do one of these to keep your credentials from being leaked onto a public repo:
+   Other options: You could also save the commands in a script file (you will remember they have the extension .sh).  But you will need do one of these to keep your credentials from being leaked onto a public repo:
 
-Option 1: Keep your script file in a place outside your repo.
+   Option 1: Keep your script file in a place outside your repo.
 
-Option 2: Keep your script file in your repo, but add the script file's name to your *.gitignore* file so that it will not be copied/committed to the public repo.
+   Option 2: Keep your script file in your repo, but add the script file's name to your *.gitignore* file so that it will not be copied/committed to the public repo.
 
 ### Step 8: Try to deploy an Azure resource group (again)
 
@@ -199,68 +203,68 @@ Option 2: Keep your script file in your repo, but add the script file's name to 
 
 #### How to check if you are in the *deploy-rg* folder
 
-Check A: Your command prompt will start similar to this:
+**Check A**: Your command prompt will start similar to this:
 
 `~/labs/github/terraform-lab/deploy-rg$`
 
 Note: You could also use the command `pwd` (to check your *Present Working Directory*).
 
-Check B: Run the `ls` command to check if there is the *main.tf* file in the folder you are currently in.
+**Check B**: Run the `ls` command to check if there is the *main.tf* file in the folder you are currently in.
 
 If you are not in the correct folder, use the `cd` command to change directory.  Use `cd` by itself or `cd ~` to go back to your home directory/folder if that helps.  Use `cd ..` to out of the folder you are in.
 
 2. Run `terraform apply`.  
 
-If you are not in the folder we initialised in Step 4.2, you will get this error:
+   If you are not in the folder we initialised in Step 4.2, you will get this error:
 
-`Error: No configuration files`
+   `Error: No configuration files`
 
-If you are on the right track, you should see this on your screen:
+   If you are on the right track, you should see this on your screen:
 
-```
-Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
-  + create
+   ```
+   Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+   + create
 
-Terraform will perform the following actions:
+   Terraform will perform the following actions:
 
-  \# azurerm_resource_group.rg will be created
-  \+ resource "azurerm_resource_group" "rg" {
-      \+ id       = (known after apply)
-      \+ location = "uksouth"
-      \+ name     = "test-rg"
-    }
+   \# azurerm_resource_group.rg will be created
+   \+ resource "azurerm_resource_group" "rg" {
+         \+ id       = (known after apply)
+         \+ location = "uksouth"
+         \+ name     = "test-rg"
+      }
 
-Plan: 1 to add, 0 to change, 0 to destroy.
+   Plan: 1 to add, 0 to change, 0 to destroy.
 
-Do you want to perform these actions?
-  Terraform will perform the actions described above.
-  Only 'yes' will be accepted to approve.
+   Do you want to perform these actions?
+   Terraform will perform the actions described above.
+   Only 'yes' will be accepted to approve.
 
-  Enter a value: 
-```
+   Enter a value: 
+   ```
 
 3. Enter *yes* and push Enter.
 
-If your deployment was successful, you should see something like this:
+   If your deployment was successful, you should see something like this:
 
-```
-azurerm_resource_group.rg: Creating...
-azurerm_resource_group.rg: Creation complete after 1s [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/test-rg]
+   ```
+   azurerm_resource_group.rg: Creating...
+   azurerm_resource_group.rg: Creation complete after 1s [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/test-rg]
 
-Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
-```
+   Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+   ```
 
 4. If you like, check it was created by going to the Azure portal.  It may take a few seconds to show up.
 
 5. You can also check the state of your deployed configuration (according to Terraform) by running this command:
 
-`terraform show`
+   `terraform show`
 
 6. You can also check the list of resources that were deployed (according to Terraform) by running this command:
 
-`terraform state list`
+   `terraform state list`
 
-If you have got this far, well done!  You are successfully made your first Azure cloud deployment using Terraform.  It's not over though...
+   If you have got this far, well done!  You are successfully made your first Azure cloud deployment using Terraform.  It's not over though...
 
 ### Step 9: Destroy (remove) the resource group your created using Terraform
 
@@ -270,41 +274,41 @@ If you don't, the resource group will stay there in the cloud.  This is not a pr
 
 1. Run this command: `terraform destroy`
 
-You should see the following:
+   You should see the following:
 
-```
-azurerm_resource_group.rg: Refreshing state... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/test-rg]
+   ```
+   azurerm_resource_group.rg: Refreshing state... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/test-rg]
 
-Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
-  - destroy
+   Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+   - destroy
 
-Terraform will perform the following actions:
+   Terraform will perform the following actions:
 
-  \# azurerm_resource_group.rg will be destroyed
-  \- resource "azurerm_resource_group" "rg" {
-      \- id       = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/test-rg" -> null
-      \- location = "uksouth" -> null
-      \- name     = "test-rg" -> null
-      \- tags     = {} -> null
-    }
+   \# azurerm_resource_group.rg will be destroyed
+   \- resource "azurerm_resource_group" "rg" {
+         \- id       = "/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/test-rg" -> null
+         \- location = "uksouth" -> null
+         \- name     = "test-rg" -> null
+         \- tags     = {} -> null
+      }
 
-Plan: 0 to add, 0 to change, 1 to destroy.
+   Plan: 0 to add, 0 to change, 1 to destroy.
 
-Do you really want to destroy all resources?
-  Terraform will destroy all your managed infrastructure, as shown above.
-  There is no undo. Only 'yes' will be accepted to confirm.
+   Do you really want to destroy all resources?
+   Terraform will destroy all your managed infrastructure, as shown above.
+   There is no undo. Only 'yes' will be accepted to confirm.
 
-  Enter a value:
-```
+   Enter a value:
+   ```
 
 2. Type 'yes' and push Enter.
 
-You should see this:
+   You should see this:
 
-```
-azurerm_resource_group.rg: Destroying... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/test-rg]
-azurerm_resource_group.rg: Still destroying... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/test-rg, 10s elapsed]
-azurerm_resource_group.rg: Destruction complete after 15s
-```
+   ```
+   azurerm_resource_group.rg: Destroying... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/test-rg]
+   azurerm_resource_group.rg: Still destroying... [id=/subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/test-rg, 10s elapsed]
+   azurerm_resource_group.rg: Destruction complete after 15s
+   ```
 
-You have now removed your first Azure resource group using Terraform!  Well done!
+   You have now removed your first Azure resource group using Terraform!  Well done!
