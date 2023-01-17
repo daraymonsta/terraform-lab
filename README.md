@@ -12,6 +12,8 @@ You need Virtualbox to run Ubuntu as a virtual machine on your local computer.  
 #### How
 Follow the instructions on the <a href="https://ubuntu.com/tutorials/how-to-run-ubuntu-desktop-on-a-virtual-machine-using-virtualbox#1-overview">Ubuntu tutorial</a> page.
 
+Important: I would also strongly recommend installing Visual Studio Code, and afterwards the "Terraform" extension (by Anton Kulikov).
+
 ### Step 2: Clone this repo
 
 #### Why
