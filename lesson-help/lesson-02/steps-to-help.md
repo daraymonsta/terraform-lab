@@ -19,13 +19,13 @@ Note: Extra hints are at the end of this document
 
 6.  Go up to the parent directory (Not sure how to? See Hint 1.2) - you will then be in the "terraform-lab" directory.
 
-7.  Copy the "deploy-rg directory" to another folder called "deploy-rg-storage" so you can make changes in the new directory (make sure you use the recursive switch to get the folder and everything in it).
+7.  Copy the "deploy-rg" directory to another folder called "deploy-rg-storage" so you can make changes in the new directory (make sure you use the recursive switch to get the folder and everything in it).
 
     Stuck?  See Hint 1.3.
 
 8.	Go to the new directory you just made called "deploy-rg-storage"
 9.	DO NOT close your Terminal window.  Go to a web browser either on your VM or local computer, and Google search for Terraform code that will deploy an Azure storage container and blob.
-10.	Copy the sample Terraform code you find on terraform.io.
+10.	Copy the sample Terraform code you find from terraform.io.
 11.	Using Visual Studio Code on your Linux VM, open the main.tf file in the "deploy-rg-storage" folder (I prefer to open the parent folder "terraform-rg", then navigate to the file).
 12.	Paste the sample code in the appropriate place.  Modify it to suit the resource group in needs to go into.
     Extension:  If you are also creating the storage container + uploading a file to it from your local computer, you can create a random file to upload - it will be easiest to store it in the same folder as your main.tf file.
